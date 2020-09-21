@@ -8,21 +8,32 @@
     <div id="root"></div>
     <script type="text/babel">
 
-      const data = [
-        { greeting: "Hello!", id: 1 },
-        { greeting: "Hi There!", id: 2 },
-        { greeting: "Yo!", id: 3},
-      ]
-      const Greetings = ({data}) => {
-        return data.map(item => {
+      const NowEating = props => <h1>{props.meal}</h1>
+
+      class Menu extends React.Component {
+        state = {
+          meal: "Spaghetti"
+        }
+        addSideDish = () => {
+          this.setState(prevState => {
+            return { meal: `${prevState.meal} & Salad`}
+          })
+        }
+        render() {
           return (
-            <li key={item.id}>{item.greeting}</li>
+            <div>
+              <NowEating meal={this.state.meal} />
+              {(this.state.meal === "Spaghetti")
+                ? <button onClick={this.addSideDish}>Add Side Dish</button>
+                : null
+              }
+            </div>
           )
-        })
+        }
       }
 
       ReactDOM.render(
-        <Greetings data={data}/>,
+        <Menu />,
         document.getElementById('root')
       )
 
